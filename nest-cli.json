@@ -25,7 +25,19 @@
       "entryFile": "main",
       "sourceRoot": "apps/idam/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/idam/tsconfig.app.json"
+        "tsConfigPath": "apps/idam/tsconfig.app.json",
+        "plugins": [
+          "@nestjs/graphql"
+        ]
+      }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     }
   }

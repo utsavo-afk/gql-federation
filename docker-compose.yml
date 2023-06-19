@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  idam-db:
+    image: mongo
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - gql-microservice-network
+
+  mongo-express:
+    depends_on:
+      - idam-db
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: idam-db
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+    networks:
+      - gql-microservice-network
+
+volumes:
+  mongo-data:
+
+
+networks:
+  gql-microservice-network:
