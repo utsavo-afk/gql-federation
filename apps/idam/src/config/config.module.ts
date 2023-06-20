@@ -3,8 +3,9 @@ import {
   ConfigModule as BaseConfigModule,
   ConfigService,
 } from '@nestjs/config';
-import dbConfig, { databaseValidationSchema } from './db.config';
+import dbConfig, { databaseConfigValidationSchema } from './db.config';
 import * as joi from 'joi';
+import jwtConfig, { jwtConfigValidationSchema } from './jwt.config';
 
 @Module({
   imports: [
@@ -12,10 +13,11 @@ import * as joi from 'joi';
       envFilePath: `${process.cwd()}/apps/idam/env/.env.${
         process.env.NODE_ENV
       }`,
-      load: [dbConfig],
+      load: [jwtConfig, dbConfig],
       cache: true,
       validationSchema: joi.object({
-        ...databaseValidationSchema,
+        ...databaseConfigValidationSchema,
+        ...jwtConfigValidationSchema,
       }),
       validationOptions: {
         abortEarly: true,

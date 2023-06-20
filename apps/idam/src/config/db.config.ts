@@ -6,7 +6,7 @@ export default registerAs('mongo', () => ({
   dbName: process.env.DB_NAME,
 }));
 
-export const databaseValidationSchema = {
+export const databaseConfigValidationSchema = {
   MONGO_URL: joi.string().required(),
   DB_NAME: joi.string().required(),
 };

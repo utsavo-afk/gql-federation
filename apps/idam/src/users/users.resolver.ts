@@ -38,9 +38,10 @@ export class UsersResolver {
       const response = await this.usersService.findById(id);
       return response;
     } catch (error) {
-      throw new GraphQLError(`${error.message}`, {
+      throw new GraphQLError(`${error.response.message}`, {
         extensions: {
-          code: HttpStatus.NOT_FOUND,
+          code: error.response.statusCode,
+          error: error.response.error,
         },
       });
     }

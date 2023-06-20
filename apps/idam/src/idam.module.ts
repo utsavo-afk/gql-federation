@@ -26,7 +26,11 @@ import { ConfigService } from '@nestjs/config';
       autoSchemaFile: {
         federation: 2,
       },
-      context: ({ req }: any) => ({ req }),
+      // TODO use context in guards
+      context: ({ req }: any) => {
+        console.log(req);
+        return { req };
+      },
     }),
     AuthModule,
     UsersModule,

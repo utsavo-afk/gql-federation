@@ -6,6 +6,7 @@ import { SigninInput } from './dto/sign-in.input';
 import { MongoErrorCodes } from 'libs/common/utils/mongoErrorCodes.util';
 import { GraphQLError } from 'graphql';
 import { HttpStatus } from '@nestjs/common';
+import { SigninResponse } from './dto/sign-in.response';
 
 @Resolver(() => User)
 export class AuthResolver {
@@ -27,8 +28,18 @@ export class AuthResolver {
     }
   }
 
-  @Mutation(() => User, { name: 'signin' })
-  signin(@Args('signinInput') signinInput: SigninInput) {
-    return this.authService.signIn(signinInput);
+  @Mutation(() => SigninResponse, { name: 'signin' })
+  async signin(@Args('signinInput') signinInput: SigninInput) {
+    try {
+      const response = await this.authService.signIn(signinInput);
+      return response;
+    } catch (error) {
+      throw new GraphQLError(`${error.response.message}`, {
+        extensions: {
+          code: error.response.statusCode,
+          error: error.response.error,
+        },
+      });
+    }
   }
 }
